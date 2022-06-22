@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine js</title>
+
+    <!-- Para poder utilizar alpine tengo que copiar el cdn -->
+
+    <!-- Normalmente los Script se colocan al finalizar el body pero en este cdn, 
+    en este Script esta esta palabra "defer" -->
+
+    <!-- defer coloca el script en la parte de abajo -->
+    <script defer src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"></script>
+</head>
+<body>
+    
+    <!-- ¿Como se trabaja con alpine? -->
+    <!-- 
+        Tengo que abrir un div dentro del body y debo inicialzar, para inicializar 
+        alpine tengo que escribir x-data. 
+
+        Lo que hace Alpine es tratar a todo el div como si fuera un componente.
+        Es decir todas las funcionalidades de alpine que nosotros agreguemos va funcionar
+        solo sobre este div
+    -->
+    <div x-data>
+
+    </div>
+
+    <!-- 
+    Yo podria colocar aqui abajo otro div y a este div tambien agregarle x-data y
+    las funcionalidades que apliquemos de alpine van a aplicar sobre este div y
+    no va interferir de ninguna manera con el div anterior de arriba.
+    -->
+    <div x-data>
+
+    </div>
+
+    <!-- 
+        Cuando nosotros programamos siempre necesitamos utilizar variables, para definir una
+        variable utilizando alpine. Tenemos que hacer lo siguiente. 
+        x-data="{ aqui se declara la variable }
+        x-data="{ nombre : valor }
+    -->
+    <div x-data="{ open: true }">
+
+    </div>
+
+    <!-- 
+        Ahora vamos a simular un menu desplegable.
+        La idea es colocar un boton y un menu.
+        Lo que vamos a lograr es mostrar o ocultar ese menu dependiendo del click que
+        se le de al boton.
+    -->
+    <!-- 
+    <div x-data="{ open: true }">
+        <button>
+            Menu
+        </button>
+
+        <nav>
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+                <li>Item 4</li>
+            </ul>
+        </nav>
+    </div> 
+    -->
+
+    <!-- 
+        Este menu por defecto va estar cerrado, a este nav le voy a pasar 
+        la siguiente directiva x-show y dnetro de este le pasamos un valor booleano
+        x-show = "true" Muestra menu
+        x-show = "false" Oculta menu
+
+        Con "x-show" podemos mostrar o ocultar una determinada seccion
+    -->
+    <!-- 
+    <div x-data="{ open: false }">
+        <button>
+            Menu
+        </button>
+
+        <nav x-show="true">
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+                <li>Item 4</li>
+            </ul>
+        </nav>
+    </div> 
+    -->
+
+    <!-- 
+        Pero yo no quiero pasarle el valor de true o el valor de false sino que
+        lo que voy hacer es pasarle el valor de la variable open. 
+    -->
+    <!-- 
+    <div x-data="{ open: false }">
+        <button>
+            Menu
+        </button>
+
+        <nav x-show="open">
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+                <li>Item 4</li>
+            </ul>
+        </nav>
+    </div> 
+    -->
+
+    <!-- 
+        Entonces lo que yo quiero lograr es que al hacer clic a este boton 
+        mi menu se abra. Para lo cual lo que tenemos que hacer es utilizar algo 
+        que se conoce como EVENTOS, los eventos ejecutan algun codigo cada vez que 
+        nosotros desencademos una accion por ejemplo: cuando hacemos clic a un boton,
+        cuando pasamos el mouse sobre alguna seccion determinada, cuando presionamos
+        una tecla, etc.
+        Cada vez que realicemos una accion podemos ejecutar una porcion de codigo.
+        En este caso nos interesa que se desencadene una accion cada vez que le demos
+        clic al boton Menu.
+        En el elemento button vamos a escribir la siguiente directiva 
+        x-on : click, con esto logramos que cada vez que hagamos clic sobre este boton
+        se ejecute una accion. Para eso le indicamos lo siguiente x-on:click="open = true"
+        en otras palabras voy a cambiar el valor de open a true
+    -->
+    <!-- 
+        <div x-data="{ open: false }">
+        <button x-on:click="open = true"> 
+            Menu
+        </button>
+        
+        <nav x-show="open">
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+                <li>Item 4</li>
+            </ul>
+        </nav>
+    </div>  
+    -->
+
+    <!-- 
+        Pero podemos hacer que cada vez que demos clic al boton cambies el valor de open
+        por el contrario de open: !open 
+        Si el valor de open era false va a cambiar a true
+        Si el valor de open era true va a cambiar a false
+        Esto para que no solo utilicemos este boton para abrir sino que tambien lo vamos
+        a utilizar para cerrar.
+    -->
+    <!-- 
+    <div x-data="{ open: false }">
+        <button x-on:click="open = !open"> 
+            Menu
+        </button>
+        
+        <nav x-show="open">
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+                <li>Item 4</li>
+            </ul>
+        </nav>
+    </div>  
+    -->
+    <!-- 
+        Es muy comun que nosotros cuando estemos trabajando con un menu cerremos el menu 
+        si hacemos clic por fuera de este menu. 
+        ¿Como logramos eso con alpine? 
+        Para lograrlo nos vamos a centrar en el nav y vamos hacer algo muy similar, vamos
+        a agregarle el evento x-on:click pero no quiero que se desencadene una accion
+        cuando de clic a todo lo que tiene el menu sino quiero que se desencadene una
+        accion cuando hagamos clic pero a cualquier parte que no sea este dentro del nav.
+        Para lograr eso escribimos x-on:click.away="open = false"
+    -->
+    <!-- 
+    <div x-data="{ open: false }">
+        <button x-on:click="open = !open"> 
+            Menu
+        </button>
+        
+        <nav x-show="open" x-on:click.away="open = false">
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+                <li>Item 4</li>
+            </ul>
+        </nav>
+    </div>   
+    -->
+
+    <!-- 
+        Para este ejemplo chiquito, no nos trae mayor dificultad definir el valor
+        de open aqui y escribir el codigo que se va ejecutar aqui. Pero conforme se hagan
+        proyectos mas robustos no vamosa a escribir simplemente una sentencia sino vamos a
+        escribir muchas lineas de codigo y definir toda la logica aca mismo va ensuciar un
+        poco nuestra pagina. 
+        Cuando queramos hacer cosas mas complejas es recomendable sacar toda la informacion
+        a algun otro lugar.
+        Si quiero extraer la informacion y colocar en la parte de abajo, debo abrir un script
+        y en este script debo abrir una function, esta funcion debe retornarme un objeto y
+        dentro de este objeto debemos definir por ejemplo:
+        lo que colocamos en div. 
+        x-data="{ open: false}" entonces lo que voy a hacer es definir esa variable en la function.
+        entonces ya no definimos el objeto directamente sino llamamos a la function donde se define
+        el objeto y retornamos ese objeto.
+    -->
+    <div x-data="data()">
+        <button x-on:click="open = !open"> 
+            Menu
+        </button>
+        
+        <nav x-show="open" x-on:click.away="open = false">
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+                <li>Item 4</li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <script>
+        function data(){
+            return {
+                open: false
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- x-cloak -->
+    <!-- 
+        A veces, cuando usa AlpineJS para una parte de su plantilla, hay un "parpadeo" 
+        en el que puede ver su plantilla sin inicializar después de que se carga la página,
+        pero antes de que se cargue Alpine.
+    -->
+    <!-- x-teleport -->
+    <!-- 
+        La x-teleport directiva le permite transportar parte de su plantilla Alpine a otra 
+        parte del DOM en la página por completo.
+
+        Esto es útil para cosas como modales (especialmente anidarlos), donde es útil salir 
+        del índice z del componente Alpine actual.
+    -->
+    

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta nombre="viewport" content="width=device-width, initial-scale=1.0">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <title>Aplicacion CRUD con Alpine.js</title>
+    <link rel="stylesheet" href="./Alpine js/css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1 class="logo">Agenda de contactos</h1>
+    </header>
+
+    <div x-data="{get: studentCrud()}" class="contenedor">
+        <div class="contenedor__tablas">
+            <div>
+                <div>
+                    <div>
+                        <table class="tabla">
+                            <thead>
+                                <tr>
+                                    <th class="cabecera">ID</th>
+                                    <th class="cabecera">Nombre</th>
+                                    <th class="cabecera">Email</th>
+                                    <th class="cabecera">Telefono</th>
+                                    <th class="cabecera">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template x-for="(student,index) in get.students" :key="index">
+                                    <tr>
+                                        <td x-text="index+1"></td>
+                                        <td x-text="student.nombre"></td>
+                                        <td x-text="student.email"></td>
+                                        <td x-text="student.telefonos[0]"></td>
+                                        <td>
+                                            <button class="btn__accion" @click.prevent="get.editarData(student,index)">Edit</button>
+                                            <button class="btn__accion" @click.prevent="get.deleteData(index)">Delete</button>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <div class="accion__contacto">
+                        <span x-show="get.addMode">Crear Contacto</span>
+                        <span x-show="!get.addMode">Editar Contacto</span>
+                    </div>
+                    <div>
+                        <form class="formulario" @submit.prevent="get.guardarDatos()" x-show="get.addMode">
+                            <div>
+                                <input class="lbl__form" x-model="get.form.nombre" type="text" placeholder="Nombre">
+                            </div>
+                            <div>
+                                <input class="lbl__form" x-model="get.form.email" type="text" placeholder="Email">
+                            </div>
+                            <div>
+                                <input class="lbl__form" x-model="get.form.telefonos[0]" type="text" placeholder="Telefono">
+                            </div>
+                            <div class="btn__guardar">
+                                <button class="btns__edit" type="submit">Guardar Contacto</button>
+                            </div>
+                        </form>
+                        <form class="formulario" @submit.prevent="get.updateData()" x-show="!get.addMode">
+                            <div>
+                                <input class="lbl__form" x-model="get.form.nombre" type="text" placeholder="Nombre">
+                            </div>
+                            <div>
+                                <input class="lbl__form" x-model="get.form.email" type="text" placeholder="Email">
+                            </div>
+                            <div>
+                                <input class="lbl__form" x-model="get.form.telefonos[0]" type="text" placeholder="Telefono">
+                            </div>
+                            <div class="contenedor__btns__edit">
+                                <button class="btns__edit" type="submit">Guardar Cambios</button>
+                                <button class="btns__edit" type="button" @click.prevent="get.cancelarEdit()">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function studentCrud() {
+            return {
+                addMode: true,
+
+                id: '',
+
+                form: {
+                    nombre: '',
+                    email: '',
+                    telefonos: ['']
+                },
+
+                students: [{
+                    nombre: 'Perico de los palotes',
+                    email: 'periquillo@gmail.com',
+                    telefonos: ['72342343']
+                },
+                {
+                    nombre: 'Tito el Bambino',
+                    email: 'bambino@gmail.com',
+                    telefonos: ['53242344']
+                },
+                {
+                    nombre: 'Leonel Messi',
+                    email: 'liomessi@gmail.com',
+                    telefonos: ['67751543']
+                }],
+
+                guardarDatos() {
+                    if (this.form.nombre.length && this.form.email.length && this.form.email.length) {
+                        this.students.push({
+                            nombre: this.form.nombre,
+                            email: this.form.email,
+                            telefonos: this.form.telefonos
+                        })
+                        this.resetForm()
+                    }
+                },
+
+                editarData(student, index) {
+                    this.addMode = false
+                    this.form.nombre = student.nombre
+                    this.form.email = student.email
+                    this.form.telefonos[0] = student.telefonos[0]
+                    this.id = index
+                },
+
+                updateData() {
+                    if (this.form.nombre.length && this.form.email.length && this.form.telefonos.length) {
+                        this.students.splice(this.id, 1, {
+                            nombre: this.form.nombre,
+                            email: this.form.email,
+                            telefonos: this.form.telefonos
+                        })
+                        this.resetForm()
+                    }
+                },
+
+                deleteData(index) {
+                    this.students.splice(index, 1)
+                },
+
+                cancelarEdit() {
+                    this.resetForm()
+                },
+                
+                resetForm() {
+                    this.form.nombre = ''
+                    this.form.email = ''
+                    this.form.telefonos = ['']
+                    this.addMode = true
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

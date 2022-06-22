@@ -1,0 +1,151 @@
+* {
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #151625;
+    color: #F3F4FD;
+}
+
+.logo{
+    text-align: center;
+    font-family: 'Bebas', sans-serif;
+    color: #F3F4FD;
+    font-size: 20px;
+}
+
+.tabla, th, td{
+    border: 1px solid #ffffff;
+    border-collapse: collapse;
+    margin: auto;
+    font-family: 'Open-Sans', sans-serif;
+    font-size: 12px;
+    margin-bottom: 3%;
+}
+
+.cabecera{
+    background-color: #000;
+    border: 1px solid #ffffff;
+}
+
+td, th {
+    padding: 2% 5px;
+}
+
+.btn__accion, .btns__edit{
+    background-color: red;
+    color: #ffffff;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.accion__contacto{
+    text-align: center;
+    font-family: 'Open-Sans', sans-serif;
+    margin-bottom: 2%;
+    font-size: 12px;
+}
+
+.formulario{
+    width: 50%;
+    margin: auto;
+}
+
+.lbl__form{
+    padding: 3% 5%;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 4%;
+    border-radius: 10px;
+    border: 0px;
+    font-family: 'Open-Sans', sans-serif;
+    font-size: 12px;
+}
+
+.contenedor__btns__edit{
+    border: 0px;
+    border-radius: 5px;
+    color: #000;
+    display: flex;
+    justify-content: space-around;
+}
+
+.btn__guardar{
+    text-align: center;
+    font-family: 'Open-Sans', sans-serif;
+    font-size: 12px;
+}
+
+@media(min-width: 768px){
+    .logo{
+        font-size: 24px;
+    }
+    .tabla, th, td{
+        font-size: 14px;
+    }
+    .cabecera{
+        background-color: #ffffff;
+        border: 1px solid #000;
+        color: #000;
+    }
+    
+    td, th {
+        padding: 2% 20px;
+    }
+    
+    .btn__accion, .btns__edit{
+        background-color: #ffffff;
+        color: #000;
+        font-size: 16px;
+        border-radius: 0px;
+    }
+    
+    .accion__contacto{
+        font-family: 'Bebas', sans-serif;
+        margin-bottom: 2%;
+        font-size: 16px;
+    }
+    
+    .lbl__form{
+        font-family: 'Open-Sans', sans-serif;
+        font-size: 14px;
+    }
+    
+    .btn__guardar{
+        font-size: 16px;
+    }
+}
+
+@media(min-width: 992px){
+    .logo{
+        font-size: 28px;
+    }
+    .tabla, th, td{
+        font-size: 16px;
+    }
+    
+    .btn__accion, .btns__edit{
+        font-size: 16px;
+        border-radius: 12px;
+    }
+    
+    .accion__contacto{
+        font-size: 16px;
+    }
+    
+    .lbl__form{
+        font-size: 16px;
+        padding-right: 50%;
+        padding-right: 50%;
+    }
+    
+    .btn__guardar{
+        font-size: 16px;
+    }
+
+    .formulario{
+        width: 40%;
+        margin: auto;
+    }
+}

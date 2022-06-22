@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALpine Js</title>
+    <!-- Para poder utilizar alpine tengo que copiar el cdn -->
+
+    <!-- Normalmente los Script se colocan al finalizar el body pero en este cdn, 
+        en este Script esta la palabra "defer" 
+    -->
+
+    <!-- defer coloca el script en la parte de abajo -->
+    <script defer src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"></script>
+    <!-- <link href="https://unpkg.com/tailwindcss^2/dist/tailwind.min.js" rel="stylesheet"> -->
+</head>
+<body>
+    <h1>Directives - Directivas</h1>
+    <!-- Directivas -->
+
+    <h1>x-data</h1>
+    <!-- x-data -->
+    <!-- 
+        Cuando nosotros programamos siempre necesitamos utilizar variables, para definir una
+        variable utilizando alpine. Tenemos que hacer lo siguiente. 
+        x-data="{ aqui se declara la variable }
+        x-data="{ nombre : valor }
+    -->
+    <!-- 
+        Todo en Alpine comienza con la x-data directiva.
+        Define un fragmento de HTML como un componente de Alpine y proporciona los datos 
+        reactivos para que ese componente haga referencia.  
+        Componente desplegable artificial:
+    -->
+    <div x-data="{ open: false }">
+        <button @click="open = !open">
+            Menu
+        </button>
+
+        <div x-show="open">
+            Contenido
+        </div>
+    </div>
+    <br><br><br><br>
+
+    <h1>x-init</h1>
+    <!-- x-init -->
+    <!-- 
+    <h1>x-init</h1>
+        Permite conectarse a la fase de inicialización de cualquier elemento en Alpine.
+    -->
+
+    
+    <div x-data="{ open: false }" x-init="open = true">
+        <button @click="open = !open">
+            Menu
+        </button>
+
+        <div x-show="open">
+            Contenido
+        </div>
+    </div>
+    <br><br><br><br>
+    
+
+
+    <h1>x-show</h1>
+    <!-- x-show -->
+    <!-- 
+        Proporciona una forma expresiva de mostrar y ocultar elementos DOM.
+
+        Las siglas DOM significan Document Object Model, o lo que es lo mismo, 
+        la estructura del documento HTML.
+    -->
+    <div x-data="{ open: false }">
+        <button @click="open = !open">
+            Menu
+        </button>
+
+        <div x-show="open">
+            Contenido
+        </div>
+    </div>
+    <br><br><br><br>
+
+
+    <h1>x-bind</h1>
+    <!-- x-bind -->
+    <!-- 
+        permite establecer atributos HTML en elementos basados ​​en el resultado de expresiones JavaScript.
+    -->
+    <div x-data="{ placeholder: 'Type here...' }">
+        <input type="text" x-bind:placeholder="placeholder">
+    </div>
+    <br><br><br><br>
+
+
+    <h1>x-on</h1>
+    <!-- x-on -->
+    <!-- 
+        permite ejecutar código fácilmente en eventos DOM enviados.
+        
+        Las siglas DOM significan Document Object Model, o lo que es lo mismo, 
+        la estructura del documento HTML.
+    -->
+    <div x-data="{ open: true }">
+        <button x-on:click="open = !open">
+            Menu
+        </button>
+
+        <div x-show="open">
+            Contenido
+        </div>
+    </div>
+    <br><br><br><br>
+
+
+    <h1>x-text</h1>
+    <!-- x-text -->
+    <!-- 
+        establece el contenido de texto de un elemento en el resultado de una expresión dada.
+        Para mostrar el nombre de usuario de un usuario.
+    -->
+    <div x-data="{ username: 'Luis' }">
+        <!-- Ahora el <strong> contenido de texto interno de la etiqueta se establecerá en "Luis". -->
+        Username: <strong x-text="username"></strong>
+    </div>
+    <br><br><br><br>
+
+
+    <h1>x-html</h1>
+    <!-- x-html -->
+    <!-- 
+        establece la propiedad "innerHTML" de un elemento en el resultado de una expresión dada.
+        para mostrar el nombre de usuario de un usuario.
+
+        innerHTML devuelve o establece la sintaxis HTML describiendo los descendientes del elemento. 
+        Al establecerse se reemplaza la sintaxis HTML del elemento por la nueva.
+    -->
+    <div x-data="{ username: '<strong>Diego</strong>' }">
+        <!-- Ahora el <span> código HTML interno de la etiqueta se establecerá en "Diego". -->
+        Username: <span x-html="username"></span>
+    </div>
+    <br><br><br><br>
+
+
+    <h1>x-model</h1>
+    <!-- x-model -->
+    <!-- 
+        permite vincular el valor de un elemento de entrada a los datos de Alpine.
+        uso de x-model para vincular el valor de un campo de texto a un dato en Alpine.
+    -->
+    <div x-data="{ message: '' }">
+        <input type="text" x-model="message">
+
+        <span x-text="message">
+    </div>
+    <!-- Podemos usar el mismo ejemplo anterior, pero esta vez agregaremos un botón para 
+    cambiar el valor de la propiedad message. -->
+    <div x-data="{ message: '' }">
+        <input type="text" x-model="message">
+
+        <button x-on:click="message = 'Modificado'">Cambiar Mensaje</button>
+    </div>
+    <br><br><br><br>
+
+
+    
+
+
+    <h1>x-for</h1>
+    <!-- x-for -->
+    <!-- 
+        permite crear elementos DOM iterando a través de una lista.
+        Hay dos reglas que vale la pena señalar x-for:
+        
+        x-for DEBE declararse en un <template> elemento
+        Ese <template> elemento DEBE tener solo un elemento raíz 
+
+        ¿Cómo usarlo para crear una lista de colores basada en una matriz?
+    -->
+    <ul x-data="{ colors: ['Red', 'Orange', 'Yellow'] }">
+        <template x-for="color in colors">
+            <li x-text="color"></li>
+        </template>
+    </ul>
+    <br><br><br><br>
+
+
+    <h1>x-transition</h1>
+    <!-- x-transition -->
+    <!-- 
+        puede crear transiciones suaves entre mostrar u ocultar un elemento.
+        Hay dos formas principales de manejar las transiciones en Alpine:
+
+        1.- El ayudante de transición
+        2.- Aplicar clases CSS
+
+        La forma más sencilla de lograr una transición con Alpine es agregar 
+        x-transitionun elemento con x-showon it.
+    -->
+    <div x-data="{ open: false }">
+        <button @click="open = ! open">Boton para transicion</button>
+
+        <span x-show="open" x-transition>
+            *** Transición *** 
+        </span>
+    </div>
+    <br><br><br><br>
+
+
+    <h1>x-effect</h1>
+    <!-- x-effect -->
+    <!-- 
+        es una directiva útil para volver a evaluar una expresión cuando cambia una de sus dependencias. 
+    -->
+    <div x-data="{ label: 'Hello' }" x-effect="label = 'cambio'">
+        <button @click="label += ' World!'">Modificar mensaje</button>
+        <p x-text="label"></p>
+    </div>
+    <!-- Cuando se carga este componente, x-effectse ejecutará la expresión y se registrará "Hola" en la consola. -->
+    <br><br><br><br>
+
+    <h1>x-ignore</h1>
+    <!-- 
+        De forma predeterminada, Alpine rastreará e inicializará todo el árbol DOM de un elemento 
+        que contenga x-inito x-data.
+        Para que Alpine no toque una sección específica de su HTML use x-ignore.
+    -->
+    <div x-data="{ label: 'De Alpine' }">
+        <div x-ignore>
+            <span x-text="label"></span>
+        </div>
+    </div>
+    <!-- 
+        En el ejemplo anterior, la <span>etiqueta no contendrá "De Alpine" porque le dijimos 
+        a Alpine que ignorara divcompletamente el contenido. 
+    -->
+    <br><br><br><br>
+
+
+    <h1>x-ref</h1>
+    <!-- x-ref -->
+    <!-- 
+        en combinación con $refs es una utilidad útil para acceder fácilmente a los elementos DOM directamente. 
+        Es más útil como reemplazo de API como getElementByIdy querySelector.
+    -->
+    <div x-data>
+        <button @click="$refs.txt.remove()">Remover Texto</button>
+        <span x-ref="txt">Mensaje de Texto</span>
+    </div>
+
+    <br><br><br><br>
+    
+
+    <h1>x-cloak</h1>
+    <!-- x-claok -->
+    <div x-cloak x-data="{ open: false }">
+        <button @click="open = !open">
+            Menu
+        </button>
+
+        <div x-show="open">
+            Contenido
+            asd
+            ad
+            asr
+            qwe
+            qwe
+            qwe
+        </div>
+    </div>
+
+    <h1>x-if</h1>
+    <!-- x-if -->
+    <!-- 
+        se usa para alternar elementos en la página, de manera similar a x-show, sin embargo, 
+        agrega y elimina por completo el elemento al que se aplica en lugar de simplemente 
+        cambiar su propiedad de visualización CSS a "ninguno".
+        debe aplicarse directamente a una <template>etiqueta que encierra el elemento. 
+        De esta forma, Alpine puede mantener un registro del elemento una vez que se elimine 
+        de la página.
+    -->
+    <template x-data="{open : true}" x-if="open">
+        <div>Contentido</div>
+    </template>
+    <!-- A diferencia x-show de , x-if NO es compatible con la transición alterna con x-transition. -->
+    <br><br><br><br>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h1>Magics - Magias</h1>
+<h1>$el</h1> -->
+<!-- $eles una propiedad mágica que se puede usar para recuperar el nodo DOM actual. -->
+
+<!-- <button x-data @click="$el.innerHTML = 'Hello World!'">Replace me with "Hello World!"</button>
+
+<br><br><br>
+
+<h1>$refs</h1> -->
+<!-- es una propiedad mágica que se puede usar para recuperar elementos DOM marcados con x-refdentro del componente. Esto es útil cuando necesita manipular manualmente elementos DOM. A menudo se usa como una alternativa más sucinta y con alcance a -->
+<!-- <div x-data>
+    <button @click="$refs.texto.remove()">Remove Text</button>
+    <span x-ref="texto">Hello 👋</span>
+</div>
+
+<br><br><br>
+
+<h1>$store</h1> -->
+<!-- Puede utilizar $store para acceder cómodamente a las tiendas globales de Alpine registradas mediante Alpine.store(...). -->
+
+<!-- <div x-data>
+    <button @click="$store.darkMode = ! $store.darkMode">Toggle Dark Mode</button>
+    <div class="w-20 h-40 rounded bg-green-900 mt-16" :class="$store.darkMode && 'bg-black'">
+        ...asdadasd
+    </div>
+</div>
+<script>
+document.addEventListener('alpine:init', () => {
+    Alpine.store('darkMode', false)
+})
+</script> -->
+
+<!-- <script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.store('darkMode', {
+            on: false,
+
+            toggle() {
+                this.on = ! this.on
+            }
+        })
+    })
+</script> -->
